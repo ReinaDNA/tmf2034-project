@@ -1,74 +1,65 @@
 <html>
 <body>
     <form action ="add_member.php" method="get">
-        <label for="first_name">First Name:</label>
-        <input type="text" id="first_name" name="first_name" required><br><br>
+        <h1>Add New Member</h1>
 
-        <label for="last_name">Last Name:</label>
-        <input type="text" id="last_name" name="last_name" required><br><br>
+        Member ID: <input type="text" name = "Member_ID" required><br><br>
 
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" name="dob" required><br><br>
+        First Name: <input type="text" name = "Member_FName" required><br><br>
 
-        <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="phone" required><br><br>
+        Last Name: <input type="text" name = "Member_LName" required><br><br>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
+        Date of Birth: <input type="date" name = "Member_DOB" required><br><br>
 
-        <label>Gender:</label>
-        <input type="radio" id="male" name="gender" value="male" required>
-        <label for="male">Male</label>
-        <input type="radio" id="female" name="gender" value="female">
-        <label for="female">Female</label><br><br>
+        Phone Number: <input type="tel" name = "Member_Contact" required><br><br>
 
-        <label>Address:</label><br>
-        <label for="unit_number">Sublot:</label>
-        <input type="text" id="unit_number" name="unit_number" required><br>
-        <label for="address">Street Name:</label>
-        <input type="text" id="address" name="address" required><br>
-        <label for="postal_code">Postal Code:</label>
-        <input type="text" id="postal_code" name="postal_code" required><br>
+        Email: <input type="email" name = "Member_Email" required><br><br>  
 
-        <br><input type="submit" value="Add Member">
+        Gender:
+        <input type="radio" name="Member_Gender" value="Male" required> Male        
+        <input type="radio" name="Member_Gender" value="Female" required> Female<br><br>
+
+        Address:<br>
+        Sublot: <input type="text" name = "Door" required><br>
+        Street Name: <input type="text" name = "Street" required><br>
+        Postal Code: <input type="text" name = "Postcode" required><br><br>
+        
+        <input type="submit" value="Add Member">    
     </form>
 </body>
 </html>
 
-<?php  
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "fitlife_wellness_centre_database_system"; // Connect to database name
+<?php
+include 'connect.php';
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $first_name = $_GET['first_name'];
-    $last_name = $_GET['last_name'];
-    $dob = $_GET['dob'];
-    $phone = $_GET['phone'];
-    $email = $_GET['email'];
-    $gender = $_GET['gender'];
-    $unit_number = $_GET['unit_number'];    
-    $address = $_GET['address'];
-    $postal_code = $_GET['postal_code'];
-    
-    $sql = "INSERT INTO members 
-            (first_name, last_name, dob, phone, email, gender, unit_number, address, postal_code) 
-            VALUES 
-            ('$first_name', '$last_name', '$dob', '$phone', '$email', '$gender', '$unit_number', '$address', '$postal_code')";    
+    $member_id = $_POST['Member_ID'];
+    $postcode  = $_POST['Postcode'];
+    $fname     = $_POST['Member_FName'];
+    $lname     = $_POST['Member_LName'];
+    $contact   = $_POST['Member_Contact'];
+    $email     = $_POST['Member_Email'];
+    $dob       = $_POST['Member_DOB'];
+    $gender    = $_POST['Member_Gender'];
+    $door      = $_POST['Door'];
+    $street    = $_POST['Street'];
+
+    $sql = "INSERT INTO Member
+            (Member_ID, Postcode, Member_FName, Member_LName,
+             Member_Contact, Member_Email, Member_DOB,
+             Member_Gender, Door, Street)
+            VALUES
+            ('$member_id', '$postcode', '$fname', '$lname',
+             '$contact', '$email', '$dob', '$gender',
+             '$door', '$street')";
 
     if ($conn->query($sql) === TRUE) {
         echo "New member added successfully";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $conn->error;
     }
 
     $conn->close();
-
 }
 ?>
