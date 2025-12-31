@@ -1,11 +1,8 @@
+<?php   
+include 'member.html';
+?>
 <html>
 <head>
-    <h1>Members Page</h1>
-     <ul><br>
-            <a href="add_member.php">Add Member</a>
-            <a href="view_members.php">View Members</a>
-            <a href="update_member.php">Update Member</a>
-            <a href="delete_member.php">Delete Member</a>
     <title>Add Member</title>
 </head>
 <body>
