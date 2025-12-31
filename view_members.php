@@ -1,9 +1,15 @@
 <htmL>
 <head>
-    <h1>Members List</h1> 
+    <h1>Members Page</h1>
+     <ul><br>
+            <a href="add_member.php">Add Member</a>
+            <a href="view_members.php">View Members</a>
+            <a href="update_member.php">Update Member</a>
+            <a href="delete_member.php">Delete Member</a>
     <title>View Members</title>     
 </head>
 <body>
+    <h1>Members List</h1> 
     <table border="1" width="100%" cellpadding="10" cellspacing="0">
         <tr>
             <th>Member ID</th>
