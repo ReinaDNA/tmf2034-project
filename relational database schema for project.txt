@@ -1,0 +1,120 @@
+
+CREATE TABLE Postcode (
+    Postcode VARCHAR(10) PRIMARY KEY,
+    City VARCHAR(50),
+    State VARCHAR(50)
+);
+
+CREATE TABLE Member (
+    Member_ID INT PRIMARY KEY,
+    Postcode VARCHAR(10),
+    Member_FName VARCHAR(50),
+    Member_LName VARCHAR(50),
+    Member_Contact VARCHAR(15),
+    Member_Email VARCHAR(100),
+    Member_DOB DATE,
+    Member_Gender VARCHAR(10),
+    Door VARCHAR(10),
+    Street VARCHAR(100),
+    FOREIGN KEY (Postcode) REFERENCES Postcode(Postcode)
+);
+
+CREATE TABLE Membership (
+    Membership_ID VARCHAR(10) PRIMARY KEY,
+    Member_ID INT,
+    Membership_Type VARCHAR(20),
+    Membership_Status VARCHAR(15),
+    Start_Date DATE,
+    Expiry_Date DATE,
+    FOREIGN KEY (Member_ID) REFERENCES Member(Member_ID)
+);
+
+
+CREATE TABLE Program (
+    Program_ID VARCHAR(5) PRIMARY KEY,
+    Program_Name VARCHAR(50),
+    Program_Category VARCHAR(20),
+    Program_Duration VARCHAR(20),
+    Program_Fee DECIMAL(7,2)
+);
+
+CREATE TABLE Enrolment (
+    Member_ID INT,
+    Program_ID VARCHAR(5),
+    Enrolment_Date DATE,
+    PRIMARY KEY (Member_ID, Program_ID),
+    FOREIGN KEY (Member_ID) REFERENCES Member(Member_ID),
+    FOREIGN KEY (Program_ID) REFERENCES Program(Program_ID)
+);
+
+CREATE TABLE Trainer (
+    Trainer_ID VARCHAR(5) PRIMARY KEY,
+    Postcode VARCHAR(10),
+    Trainer_FName VARCHAR(50),
+    Trainer_LName VARCHAR(50),
+    Trainer_Contact VARCHAR(15),
+    Trainer_Email VARCHAR(100),
+    Trainer_Gender VARCHAR(10),
+    Trainer_Specialization VARCHAR(30),
+    Trainer_Certification VARCHAR(30),
+    Door VARCHAR(10),
+    Street VARCHAR(100),
+    FOREIGN KEY (Postcode) REFERENCES Postcode(Postcode)
+);
+
+CREATE TABLE Program_Trainer (
+    Program_ID VARCHAR(5),
+    Trainer_ID VARCHAR(5),
+    Start_Date DATE,
+    End_Date DATE,
+    PRIMARY KEY (Program_ID, Trainer_ID, Start_Date),
+    FOREIGN KEY (Program_ID) REFERENCES Program(Program_ID),
+    FOREIGN KEY (Trainer_ID) REFERENCES Trainer(Trainer_ID)
+);
+
+CREATE TABLE Class (
+    Class_Code INT,
+    Program_ID VARCHAR(5),
+    Class_Date DATE,
+    Class_Start TIME,
+    Class_End TIME,
+    Class_Venue VARCHAR(50),
+    Class_Status VARCHAR(10),
+    PRIMARY KEY (Class_Code, Program_ID),
+    FOREIGN KEY (Program_ID) REFERENCES Program(Program_ID)
+);
+
+CREATE TABLE Payment (
+    Invoice_No VARCHAR(10) PRIMARY KEY,
+    Member_ID INT,
+    Membership_ID VARCHAR(10),
+    Program_ID VARCHAR(5),
+    Payment_Date DATE,
+    Amount DECIMAL(7,2),
+    Payment_Type VARCHAR(20),
+    FOREIGN KEY (Member_ID) REFERENCES Member(Member_ID),
+    FOREIGN KEY (Membership_ID) REFERENCES Membership(Membership_ID),
+    FOREIGN KEY (Program_ID) REFERENCES Program(Program_ID)
+);
+
+CREATE TABLE Card (
+    Invoice_No VARCHAR(10) PRIMARY KEY,
+    Card_Type VARCHAR(20),
+    Card_Last4Digit CHAR(4),
+    Card_Bank VARCHAR(50),
+    FOREIGN KEY (Invoice_No) REFERENCES Payment(Invoice_No)
+);
+
+CREATE TABLE Online (
+    Invoice_No VARCHAR(10) PRIMARY KEY,
+    Payment_Provider VARCHAR(50),
+    Transaction_ID VARCHAR(50),
+    FOREIGN KEY (Invoice_No) REFERENCES Payment(Invoice_No)
+);
+
+CREATE TABLE Cash (
+    Invoice_No VARCHAR(10) PRIMARY KEY,
+    Cash_Received DECIMAL(7,2),
+    Cash_Changed DECIMAL(7,2),
+    FOREIGN KEY (Invoice_No) REFERENCES Payment(Invoice_No)
+);
