@@ -20,16 +20,7 @@ include 'member.html';
         </tr>
       
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "fitlife_wellness_centre_database_system"; // Connect to database name
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'connect.php';
 
 $sql = "SELECT * FROM member";
 
