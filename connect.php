@@ -1,10 +1,7 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "fitlife_wellness_centre_database_system"; // Connect to database name 
+$conn = new mysqli("localhost", "root", "", "fitlife_wellness_centre_database_system");
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-global $conn;
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 ?>
