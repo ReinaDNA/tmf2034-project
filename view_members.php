@@ -1,3 +1,21 @@
+<htmL>
+<head>
+    <h1>Members List</h1> 
+    <title>View Members</title>     
+</head>
+<body>
+    <table border="1" width="100%" cellpadding="10" cellspacing="0">
+        <tr>
+            <th>Member ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of Birth</th>
+            <th>Contact Number</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Address</th>    
+        </tr>
+      
 <?php
 $servername = "localhost";
 $username = "root";
@@ -16,13 +34,16 @@ $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_assoc($result)) {
-        echo "Member ID: " . $row["Member_ID"]. 
-        " - Name: " . $row["Member_FName"]. " " . $row["Member_LName"]. 
-        " - DOB: " . $row["Member_DOB"]. 
-        " - Phone: " . $row["Member_Contact"]. 
-        " - Email: " . $row["Member_Email"].
-        " - Gender: " . $row["Member_Gender"]. 
-        "<br>"; 
+        echo "<tr>";
+        echo "<td>{$row['Member_ID']}</td>";
+        echo "<td>{$row['Member_FName']}</td>";
+        echo "<td>{$row['Member_LName']}</td>";
+        echo "<td>{$row['Member_DOB']}</td>";
+        echo "<td>{$row['Member_Contact']}</td>";
+        echo "<td>{$row['Member_Email']}</td>";
+        echo "<td>{$row['Member_Gender']}</td>";
+        echo "<td>{$row['Door']}, {$row['Street']}, {$row['Postcode']}</td>";
+        echo "</tr>";
     }
 } else {
     echo "0 results";
