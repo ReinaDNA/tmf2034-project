@@ -2,36 +2,30 @@
 <body>
     <h1>Delete Member</h1>
     <form action="delete_member.php" method="get">
-        <label for="member_id">Member ID to Delete:</label>
-        <input type="text" id="member_id" name="member_id" required><br><br>
+        Member ID to Delete: <input type="text" name="member_id" required><br><br>
         <input type="submit" value="Delete Member">
     </form>
 </body>
 </html>
 
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "fitlife_wellness_centre_database_system"; // Connect to database name
-
 include 'connect.php';
 
 if(isset($_GET['member_id'])) {
     $member_id = $_GET['member_id'];
 
     $sql = "DELETE FROM member WHERE Member_ID = '$member_id'";
+    $result = mysqli_query($conn, $sql);
 
+    if($result) {   
     if ($conn->query($sql) ==TRUE ) {
-        echo $member_id . " Member deleted successfully";
+        echo $member_id . " Member is deleted successfully";
     } else {
-        echo "Error deleting member: " . $conn->error;
-        #still shows success message even when error occurs (not fixed)
+        echo "No record found for ID: " . $member_id;
     }
-} else {
-    echo "No member ID provided.";
-    #still shows before form is submitted (not fixed)
+    } else {
+        echo "No member ID provided.";
+    }
 }
-
 mysqli_close($conn);
 ?>
