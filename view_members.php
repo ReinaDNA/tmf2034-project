@@ -20,16 +20,7 @@ include 'member.html';
         </tr>
       
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "fitlife_wellness_centre_database_system"; // Connect to database name
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+include 'connect.php';
 
 $sql = "SELECT * FROM member";
 
@@ -37,6 +28,7 @@ $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_assoc($result)) {
+        $id = $row['Member_ID'];
         echo "<tr>";
         echo "<td>{$row['Member_ID']}</td>";
         echo "<td>{$row['Member_FName']}</td>";
@@ -46,6 +38,7 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td>{$row['Member_Email']}</td>";
         echo "<td>{$row['Member_Gender']}</td>";
         echo "<td>{$row['Door']}, {$row['Street']}, {$row['Postcode']}</td>";
+        echo "<td><a href='update_member_form.php?id=".$id."'>Update</a></td>";
         echo "</tr>";
     }
 } else {
