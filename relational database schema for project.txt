@@ -73,7 +73,7 @@ CREATE TABLE Program_Trainer (
 );
 
 CREATE TABLE Class (
-    Class_Code INT,
+    Class_Code VARCHAR(5),
     Program_ID VARCHAR(7),
     Class_Date DATE,
     Class_Start TIME,
