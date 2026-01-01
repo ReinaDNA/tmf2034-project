@@ -6,7 +6,7 @@ include 'member.html';
     <title>Add Member</title>
 </head>
 <body>
-    <form action ="add_member.php" method="get">
+    <form action ="add_member.php" method="post">
         <h1>Add New Member</h1>
 
         Member ID: <input type="text" name = "Member_ID" required><br><br>
