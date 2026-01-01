@@ -74,7 +74,7 @@ mysqli_close($conn);
 <html>
 <body>
 	Record found<br>
-    Update Student Details: <br>
+    Update Trainer Details: <br>
     ------------------------- <br>
     <form action="update_trainer.php" method="POST">
         ID: <input type="text" name="Trainer_ID" value="<?php echo $id; ?>" readonly><br><br>
