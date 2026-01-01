@@ -31,7 +31,7 @@ CREATE TABLE Membership (
 
 
 CREATE TABLE Program (
-    Program_ID VARCHAR(5) PRIMARY KEY,
+    Program_ID VARCHAR(7) PRIMARY KEY,
     Program_Name VARCHAR(50),
     Program_Category VARCHAR(20),
     Program_Duration VARCHAR(20),
@@ -40,7 +40,7 @@ CREATE TABLE Program (
 
 CREATE TABLE Enrolment (
     Member_ID INT,
-    Program_ID VARCHAR(5),
+    Program_ID VARCHAR(7),
     Enrolment_Date DATE,
     PRIMARY KEY (Member_ID, Program_ID),
     FOREIGN KEY (Member_ID) REFERENCES Member(Member_ID),
@@ -63,7 +63,7 @@ CREATE TABLE Trainer (
 );
 
 CREATE TABLE Program_Trainer (
-    Program_ID VARCHAR(5),
+    Program_ID VARCHAR(7),
     Trainer_ID VARCHAR(5),
     Start_Date DATE,
     End_Date DATE,
@@ -74,7 +74,7 @@ CREATE TABLE Program_Trainer (
 
 CREATE TABLE Class (
     Class_Code INT,
-    Program_ID VARCHAR(5),
+    Program_ID VARCHAR(7),
     Class_Date DATE,
     Class_Start TIME,
     Class_End TIME,
@@ -88,7 +88,7 @@ CREATE TABLE Payment (
     Invoice_No VARCHAR(10) PRIMARY KEY,
     Member_ID INT,
     Membership_ID VARCHAR(10),
-    Program_ID VARCHAR(5),
+    Program_ID VARCHAR(7),
     Payment_Date DATE,
     Amount DECIMAL(7,2),
     Payment_Type VARCHAR(20),
