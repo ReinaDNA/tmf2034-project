@@ -8,7 +8,7 @@ include 'membership.html';
 </head>
 <body>
     <form action ="add_membership.php" method="post">
-        <h1>Add New Member</h1>
+        <h1>Add New Membership</h1>
 
         Membership_ID: <input type="text" name = "Membership_ID" required><br><br>
 
