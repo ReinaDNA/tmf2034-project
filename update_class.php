@@ -57,13 +57,12 @@ if (isset($_POST['Update'])) {
 mysqli_close($conn);
 ?>
 
-<!DOCTYPE html>
-<html>
-<body>
+    <html>
+        <body>
 
-<h2>Update Class</h2>
+        <h2>Update Class</h2>
 
-<form action="update_class.php" method="POST">
+        <form action="update_class.php" method="POST">
 
     Class Code:<br>
     <input type="text" name="class_code" value="<?php echo $class_code; ?>" readonly><br><br>
