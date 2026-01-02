@@ -19,7 +19,7 @@ include 'membership.html';
 </html>
 
 <?php
-include 'connect.php';
+include '../connect.php';
 
 if(isset($_GET['membership_id'])) {
     $membership_id = $_GET['membership_id'];

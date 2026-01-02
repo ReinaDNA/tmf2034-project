@@ -1,6 +1,6 @@
 <?php
 include 'membership.html';
-include 'connect.php';
+include '../connect.php';
 
 $membership_id = "";
 $member_id = "";
