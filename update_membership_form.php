@@ -89,6 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <option value ="">Please Choose</option>
         <option value="Active" <?php if ($membership_status == 'Active') echo 'selected';?>>Active</option>
         <option value="Inactive" <?php if ($membership_status == 'Inactive') echo 'selected';?>>Inactive</option>
+        <option value="Suspended" <?php if ($membership_status == 'Suspended') echo 'selected';?>>Suspended</option><br><br>
         </select><br><br>
 
         Start Date: <input type="date" name = "Start_Date" value="<?php echo $start_date; ?>"><br><br>
