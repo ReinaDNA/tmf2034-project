@@ -1,6 +1,6 @@
 <?php
 include 'member.html';
-include 'connect.php';
+include '../connect.php';
 
 $id = "";
 $fname = "";
@@ -87,13 +87,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         Email: <input type="email" name="Member_Email" value="<?php echo $email; ?>"><br><br>
 
         Gender:
-        <input type="radio" name="Member_Gender" value="Male" <?php if ($gender == 'Male') echo 'checked';?>>
-        <input type="radio" name="Member_Gender" value="Female" <?php if ($gender == 'Female') echo 'checked';?>><br><br>
+        Male <input type="radio" name="Member_Gender" value="Male" <?php if ($gender == 'Male') echo 'checked';?>>
+        Female <input type="radio" name="Member_Gender" value="Female" <?php if ($gender == 'Female') echo 'checked';?>><br><br>
 
         Address:<br>
         Sublot: <input type="text" name = "Door" value="<?php echo $door; ?>"><br>
         Street Name: <input type="text" name = "Street" value="<?php echo $street; ?>"><br>
-        Postal Code: <input type="text" name = "Postcode" value="<?php echo $postcode; ?>"><br><br>  
+        Postal Code: 
+        <select name="Postcode" id="Postcode" required>
+        <option value="">Please Choose</option>
+        <?php $sql = "SELECT Postcode FROM Postcode";
+        $result = mysqli_query($conn, $sql);
+            if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<option value='{$row['Postcode']}'>{$row['Postcode']}</option>";
+                }}?>
+        </select><br><br>
 
         <input type="submit" value="Update Member">
     </form>
