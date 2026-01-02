@@ -27,7 +27,7 @@ if (isset($_GET['id'])) {
         $lname = $row['Trainer_LName'];
         $contact = $row['Trainer_Contact'];
         $email = $row['Trainer_Email'];
-        $gender = $row['Member_Gender'];
+        $gender = $row['Trainer_Gender'];
         $door = $row['Door'];
         $street = $row['Street'];
         $postcode = $row['Postcode'];
