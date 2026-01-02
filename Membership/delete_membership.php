@@ -1,5 +1,6 @@
 <?php   
 include 'membership.html';
+include '../connect.php';
 ?>
 
 <html>
@@ -12,7 +13,18 @@ include 'membership.html';
 
 <body>
     <form action="delete_membership.php" method="get">
-        Membership ID to Delete: <input type="text" name="membership_id" required><br><br>
+        Membership ID to Delete: 
+        <select name="membership_id" id="membership_id" required>
+        <option value="">Please Choose</option>
+        <?php
+        $sql = "SELECT Membership_ID FROM membership";
+        $result = mysqli_query($conn, $sql);
+            if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<option value='{$row['Membership_ID']}'>{$row['Membership_ID']}</option>";
+                }}?>
+
+        </select><br><br>
         <input type="submit" value="Delete Membership">
     </form>
 </body>

@@ -16,7 +16,8 @@ include 'member.html';
             <th>Contact Number</th>
             <th>Email</th>
             <th>Gender</th>
-            <th>Address</th>    
+            <th>Address</th> 
+            <th>Action</th>
         </tr>
       
 <?php

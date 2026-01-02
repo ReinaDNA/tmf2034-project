@@ -15,6 +15,7 @@ include 'membership.html';
             <th>Membership Status</th>
             <th>Start Date</th>
             <th>Expiry Date</th> 
+            <th>Action</th>
         </tr>
       
 <?php
