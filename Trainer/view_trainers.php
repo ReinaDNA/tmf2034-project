@@ -21,7 +21,7 @@ include 'trainer.html';
         </tr>
       
 <?php
-include 'connect.php';
+include '../connect.php';
 
 $sql = "
 SELECT 
