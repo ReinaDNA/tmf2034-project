@@ -31,6 +31,8 @@ if (isset($_GET['id'])) {
         $door = $row['Door'];
         $street = $row['Street'];
         $postcode = $row['Postcode'];
+        $specialization = $row['Trainer_Specialization'];
+        $certification = $row['Trainer_Certification'];
 
     } else {
         echo "No member found with ID: " . $id;
@@ -47,8 +49,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $door = $_POST['Door'];     
     $street = $_POST['Street'];
     $postcode = $_POST['Postcode'];
-    $specialization = $_POST['Specialization'];
-    $certification = $_POST['Certification'];
+    $specialization = $_POST['Trainer_Specialization'];
+    $certification = $_POST['Trainer_Certification'];
 
     $sql = "UPDATE trainer SET 
             Trainer_FName = '$fname',
@@ -58,7 +60,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Trainer_Gender = '$gender',
             Door = '$door',
             Street = '$street',
-            Postcode = '$postcode'
+            Postcode = '$postcode',
+            Trainer_Specialization = '$specialization',
+            Trainer_Certification = '$certification'
             WHERE Trainer_ID = '$id'";
 
     if (mysqli_query($conn, $sql)) {
@@ -103,8 +107,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }}?>
         </select><br><br>
 
-        Specialization: <input type="text" name = "Specialization" value="<?php echo $specialization; ?>"><br><br>
-        Certification: <input type="text" name = "Certification" value="<?php echo $certification; ?>"><br><br>
+        Specialization: <input type="text" name = "Trainer_Specialization" value="<?php echo $specialization; ?>"><br><br>
+        Certification: <input type="text" name = "Trainer_Certification" value="<?php echo $certification; ?>"><br><br>
 
         <input type="submit" value="Update Trainer">
     </form>

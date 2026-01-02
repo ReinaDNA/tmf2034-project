@@ -38,8 +38,8 @@ include '../connect.php'
                 }}?>
         </select><br><br>        
 
-        Specialization: <input type="text" name = "Specialization" required><br><br>
-        Certification: <input type="text" name = "Certification" required><br><br>
+        Specialization: <input type="text" name = "Trainer_Specialization" required><br><br>
+        Certification: <input type="text" name = "Trainer_Certification" required><br><br>
         
         <input type="submit" value="Add Trainer">    
     </form>
@@ -60,12 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gender    = $_POST['Trainer_Gender'];
     $door      = $_POST['Door'];
     $street    = $_POST['Street'];
-    $specialization = $_POST['Specialization'];
-    $certification = $_POST['Certification'];
+    $specialization = $_POST['Trainer_Specialization'];
+    $certification = $_POST['Trainer_Certification'];
     $sql1 = "INSERT INTO Trainer
             (Trainer_ID, Postcode, Trainer_FName, Trainer_LName,
              Trainer_Contact, Trainer_Email,
-             Trainer_Gender, Specialization, Certification, Door, Street)
+             Trainer_Gender, Trainer_Specialization, Trainer_Certification, Door, Street)
             VALUES
             ('$trainer_id', '$postcode', '$fname', '$lname',
              '$contact', '$email', '$gender',
