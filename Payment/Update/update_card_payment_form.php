@@ -1,6 +1,26 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+ </head>
+
+ <body>
+     <h1>Payments Page</h1>
+     <p>
+        This page is for making payments and checking payment history made at Fitlife Wellness Centre.
+     </p>
+        <a href="../../main.html">Home</a>
+        <a href="../add_payment.php">Make Payment</a>
+        <a href="../view_payment_record.php">Payment History</a>
+        <a href="../delete_payment.php">Delete Payment</a>
+    <hr>
+</body>
+</html>
+
 <?php
-include 'payment.html';
-include '../connect.php';
+include '../../connect.php';
 
 $Invoice_No    = '';
 $Card_Type     = '';

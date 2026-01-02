@@ -22,7 +22,7 @@ if (isset($_GET['id'])) {
 
     } else {
         echo "No member found with ID: " . $id;
-    }
+     }
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

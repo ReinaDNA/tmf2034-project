@@ -1,6 +1,24 @@
-<?php   
-include 'payment.html';
-?>
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+ </head>
+
+ <body>
+     <h1>Payments Page</h1>
+     <p>
+        This page is for making payments and checking payment history made at Fitlife Wellness Centre.
+     </p>
+        <a href="../../main.html">Home</a>
+        <a href="../add_payment.php">Make Payment</a>
+        <a href="view_payment_record.php">Payment History</a>
+        <a href="../delete_payment.php">Delete Payment</a>
+    <hr>
+</body>
+</html>
+
 <htmL>
 <head>
     <title>View Payment Records</title>     
@@ -25,7 +43,7 @@ include 'payment.html';
         </tr>
       
 <?php
-include '../connect.php';
+include '../../connect.php';
 
 $sql = "SELECT * FROM payment";
 
@@ -42,7 +60,7 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td>{$row['Payment_Date']}</td>";
         echo "<td>RM{$row['Amount']}</td>";
         echo "<td>{$row['Payment_Type']}</td>";
-        echo "<td><a href='update_payment_form.php?Invoice_No=".$Invoice_No."'>Update</a></td>";
+        echo "<td><a href='../Update/update_payment_form.php?Invoice_No=".$Invoice_No."'>Update</a></td>";
         echo "</tr>";
     }
 } else {

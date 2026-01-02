@@ -14,6 +14,7 @@ include 'program.html';
             <th>Program Duration</th>
             <th>Program Category</th>
             <th>Program Fee</th>
+            <th>Action</th>
         </tr>
       
 <?php
