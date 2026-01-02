@@ -1,5 +1,6 @@
 <?php   
 include 'classes.html';
+include '../connect.php';
 ?>
 
 <html>
@@ -19,7 +20,6 @@ include 'classes.html';
 </html>
 
 <?php
-include 'connect.php';
 
 if (isset($_GET['class_code'])) {
     $class_code = $_GET['class_code'];

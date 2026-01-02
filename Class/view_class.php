@@ -20,7 +20,7 @@ include 'classes.html';
         </tr>
 
 <?php
-include 'connect.php';
+include '../connect.php';
 
 $sql = "SELECT * FROM Class";
 

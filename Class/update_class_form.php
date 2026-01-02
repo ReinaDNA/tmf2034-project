@@ -1,6 +1,6 @@
 <?php
 include 'classes.html';
-include 'connect.php';
+include '../connect.php';
 
 $class_code = "";
 $program_id = "";
