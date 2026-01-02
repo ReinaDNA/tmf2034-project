@@ -1,5 +1,6 @@
 <?php  
 include 'classes.html';
+include '../connect.php';
 ?>
 <html>
 <head>
@@ -33,7 +34,6 @@ include 'classes.html';
 </html>
 
 <?php
-include 'connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
