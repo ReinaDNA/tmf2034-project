@@ -24,6 +24,7 @@ CREATE TABLE Membership (
     Member_ID INT,
     Membership_Type VARCHAR(20),
     Membership_Status VARCHAR(15),
+    Membership_Fee decimal(7,2)
     Start_Date DATE,
     Expiry_Date DATE,
     FOREIGN KEY (Member_ID) REFERENCES Member(Member_ID)
