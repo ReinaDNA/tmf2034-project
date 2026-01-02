@@ -12,17 +12,24 @@
             <th>Total Cancelled Classes</th>
         </tr>
 <?php
-include 'connect.php';
+include 'data_manipulation.html';
+include '../connect.php';
 
 $sql = "SELECT 
     t.Trainer_ID,
     CONCAT(t.Trainer_FName, ' ', t.Trainer_LName) AS Trainer_Name,
-    COUNT(DISTINCT c.Class_Status='Completed') AS Total_Classes_Taught,
-    COUNT(DISTINCT c.Class_Status='Cancelled') AS Total_Cancelled_Classes
+
+    SUM(c.Class_Status = 'Completed') AS Total_Classes_Taught,
+    SUM(c.Class_Status = 'Cancelled') AS Total_Cancelled_Classes
 FROM Trainer t
-LEFT JOIN Class c ON t.Trainer_ID = c.Trainer_ID
-GROUP BY t.Trainer_ID, t.Trainer_FName, t.Trainer_LName
-ORDER BY Total_Classes_Taught DESC
+JOIN program_trainer pt ON pt.Trainer_ID = t.Trainer_ID
+JOIN Class c 
+    ON pt.Program_ID = c.Program_ID
+GROUP BY 
+    t.Trainer_ID,
+    t.Trainer_FName,
+    t.Trainer_LName
+ORDER BY t.Trainer_ID ASC
 LIMIT 5";
 
 $result = mysqli_query($conn, $sql);
