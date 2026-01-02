@@ -1,279 +1,184 @@
 <?php
 include 'connect.php';
+include 'payment.php';
 
-$receipt = '';
+# Detect which payment type is chosen
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $pay_type = $_POST['Pay_Type'];
-    $member_id = $_POST['Member_ID'];
-    $payment_method = $_POST['Payment_Method'];
-    $payment_date = date('Y-m-d');
-    $invoice_no = 'P' . time();
+$payType = '';
 
-    # Handle payment for Membership or Program
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    # Scenario 1: Membership Payment
-    if ($pay_type == 'Membership') {
-        $membership_type = $_POST['Membership_Type'];
-        $amount = 0;
-        switch ($membership_type) {
-            # Pre-set amount for each membership type
-            case 'Monthly': $amount = 50; break;
-            case 'Quarterly': $amount = 80; break;
-            case 'Yearly': $amount = 120; break;
-        }
-        $membership_id = 'M' . $member_id;
-        $start_date = $payment_date;
-        # Calculate expiry date
-        $expiry_date = new DateTime($start_date);
-        switch ($membership_type) {
-            # If existing membership, extend from current expiry date
-            case 'Monthly': $expiry_date->modify('+1 month'); break;
-            case 'Quarterly': $expiry_date->modify('+3 months'); break;
-            case 'Yearly': $expiry_date->modify('+1 year'); break;
-        }
-        $expiry_date_str = $expiry_date->format('Y-m-d'); # YYYY-MM-DD
+    if (isset($_POST['Pay_Type'])) {
+        $payType = $_POST['Pay_Type'];
+    }
 
-        # Insert into Table "Membership"
-        $stmt = $conn->prepare("INSERT INTO Membership (Membership_ID, Member_ID, Membership_Type, Membership_Status, Start_Date, Expiry_Date) VALUES (?, ?, ?, 'Active', ?, ?)");
-        $stmt->bind_param("sssss", $membership_id, $member_id, $membership_type, $start_date, $expiry_date_str);
-        $stmt->execute();
-        $stmt->close();
+    if (isset($_POST['Confirm_Membership'])) {
+        $invoiceNo = 'INV' . date('Ymd') . rand(1000, 9999);
+        $member_id = $_POST['Member_ID'];
+        
+        // Get Membership ID
+        $sql = "SELECT Membership_ID FROM Membership WHERE Member_ID = '$member_id'";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $membership_id = $row['Membership_ID'];
 
-        # Insert into Table "Payment"
-        $stmt = $conn->prepare("INSERT INTO Payment (Invoice_No, Member_ID, Membership_ID, Payment_Date, Amount, Payment_Type) VALUES (?, ?, ?, ?, ?, 'Membership')");
-        $stmt->bind_param("ssssd", $invoice_no, $member_id, $membership_id, $payment_date, $amount);
-        $stmt->execute();
-        $stmt->close();
+        $payment_method = $_POST['Payment_Method'];
 
-        # Print the receipt
-        $receipt = "Receipt\nInvoice No: $invoice_no\nMember ID: $member_id\nPayment Date: $payment_date\nAmount: RM$amount\nType: Membership ($membership_type)";
+        $sql = "INSERT INTO Payment
+            (Invoice_No, Member_ID, Membership_ID, Program_ID,
+            Payment_Date, Amount, Payment_Type)
+            VALUES
+            ('$invoiceNo', '$member_id', '$membership_id', '',
+            NOW(), 0, '$payment_method')";
 
-    # Scenario 2: Program Payment
-    } elseif ($pay_type == 'Program') {
+    echo "<h3>Membership Payment Submitted</h3>";
+    }
+
+    if (isset($_POST['Confirm_Program'])) {
+
+        $invoiceNo = 'INV' . date('Ymd') . rand(1000, 9999);
+        $member_id = $_POST['Member_ID'];
+
+        // Get Membership ID
+        $sql = "SELECT Membership_ID FROM Membership WHERE Member_ID = '$member_id'";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+        $membership_id = $row['Membership_ID'];
+
         $program_id = $_POST['Program_ID'];
-        # Get Program fee
-        $stmt = $conn->prepare("SELECT Program_Fee FROM Program WHERE Program_ID = ?");
-        $stmt->bind_param("s", $program_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        $amount = $row['Program_Fee'];
-        $stmt->close();
+        $payment_method = $_POST['Payment_Method'];
 
-        # Insert into Table "Enrolment"
-        $stmt = $conn->prepare("INSERT INTO Enrolment (Member_ID, Program_ID, Enrolment_Date) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $member_id, $program_id, $payment_date);
-        $stmt->execute();
-        $stmt->close();
+        // Insert payment
+        $sql = "INSERT INTO Payment
+                (Invoice_No, Member_ID, Membership_ID, Program_ID,
+                Payment_Date, Amount, Payment_Type)
+                VALUES
+                ('$invoiceNo', '$member_id', '$membership_id', '$program_id',
+                NOW(), 0, '$payment_method')";
 
-        # Insert into Table "Payment"
-        $stmt = $conn->prepare("INSERT INTO Payment (Invoice_No, Member_ID, Program_ID, Payment_Date, Amount, Payment_Type) VALUES (?, ?, ?, ?, ?, 'Program')");
-        $stmt->bind_param("ssssd", $invoice_no, $member_id, $program_id, $payment_date, $amount);
-        $stmt->execute();
-        $stmt->close();
+        mysqli_query($conn, $sql);
 
-        # Print the receipt
-        $receipt = "Receipt\nInvoice No: $invoice_no\nMember ID: $member_id\nPayment Date: $payment_date\nAmount: RM$amount\nType: Program ($program_id)";
-
+        echo "<h3>Program Payment Submitted</h3>";
+        echo "Invoice No: <strong>$invoiceNo</strong>";
     }
 
-    # Handle payment method
-    if ($payment_method == 'Card') {
-        $card_type = $_POST['Card_Type'];
-        $card_last4 = $_POST['Card_Last4'];
-        $card_bank = $_POST['Card_Bank'];
-        $stmt = $conn->prepare("INSERT INTO Card (Invoice_No, Card_Type, Card_Last4Digit, Card_Bank) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $invoice_no, $card_type, $card_last4, $card_bank);
-        $stmt->execute();
-        $stmt->close();
-        $receipt .= "\nPayment Method: $payment_method ($card_type ****$card_last4)";
-    } elseif ($payment_method == 'Online') {
-        $payment_provider = $_POST['Payment_Provider'];
-        $transaction_id = $_POST['Transaction_ID'];
-        $stmt = $conn->prepare("INSERT INTO Online (Invoice_No, Payment_Provider, Transaction_ID) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $invoice_no, $payment_provider, $transaction_id);
-        $stmt->execute();
-        $stmt->close();
-        $receipt .= "\nPayment Method: $payment_provider (Transaction ID: $transaction_id)";
-    } elseif ($payment_method == 'Cash') {
-        $cash_received = $_POST['Cash_Received'];
-        $cash_changed = $cash_received - $amount;
-        $stmt = $conn->prepare("INSERT INTO Cash (Invoice_No, Cash_Received, Cash_Changed) VALUES (?, ?, ?)");
-        $stmt->bind_param("sdd", $invoice_no, $cash_received, $cash_changed);
-        $stmt->execute();
-        $stmt->close();
-        $receipt .= "\nPayment Method: Cash\nCash Received: RM$cash_received\nChange: RM$cash_changed";
-    }
-
-    $conn->close();
 }
 ?>
 
- # get_programs
-<?php
-include 'connect.php';
-
-$category = $_GET['category'];
-
-$sql = "SELECT Program_ID, Program_Name, Program_Fee FROM Program WHERE Program_Category = '$category'";
-
-$result = $conn->query($sql);
-
-$programs = [];
-
-while ($row = $result->fetch_assoc()) {
-    $programs[] = $row;
-}
-
-echo json_encode($programs);
-
-$conn->close();
-?>
-
+<!DOCTYPE html>
 <html>
 <head>
     <title>Make Payment</title>
-    <script>
-        function toggleSections() {
-            var payType = document.querySelector('input[name="Pay_Type"]:checked').value;
-            document.getElementById('membershipSection').style.display = payType === 'Membership' ? 'block' : 'none';
-            document.getElementById('programSection').style.display = payType === 'Program' ? 'block' : 'none';
-        }
-
-        function updateMembershipAmount() {
-            var type = document.getElementById('Membership_Type').value;
-            var amount = 0;
-            switch (type) {
-                case 'Monthly': amount = 50; break;
-                case 'Quarterly': amount = 80; break;
-                case 'Yearly': amount = 120; break;
-            }
-            document.getElementById('amount').value = amount;
-        }
-
-        function loadPrograms() {
-            var category = document.getElementById('Program_Category').value;
-            fetch('get_programs.php?category=' + category)
-                .then(response => response.json())
-                .then(data => {
-                    var select = document.getElementById('Program_ID');
-                    select.innerHTML = '<option value="">Select Program</option>';
-                    data.forEach(program => {
-                        var option = document.createElement('option');
-                        option.value = program.Program_ID;
-                        option.text = program.Program_Name + ' - RM' + program.Program_Fee;
-                        option.dataset.fee = program.Program_Fee;
-                        select.appendChild(option);
-                    });
-                });
-        }
-
-        function updateProgramAmount() {
-            var select = document.getElementById('Program_ID');
-            var selected = select.options[select.selectedIndex];
-            if (selected.dataset.fee) {
-                document.getElementById('amount').value = selected.dataset.fee;
-            }
-        }
-
-        function togglePaymentFields() {
-            var method = document.getElementById('Payment_Method').value;
-            document.getElementById('cashFields').style.display = method === 'Cash' ? 'block' : 'none';
-            document.getElementById('cardFields').style.display = (method === 'Credit Card' || method === 'Debit Card') ? 'block' : 'none';
-            document.getElementById('paypalFields').style.display = method === 'PayPal' ? 'block' : 'none';
-        }
-
-        window.onload = function() {
-            document.querySelectorAll('input[name="Pay_Type"]').forEach(radio => radio.addEventListener('change', toggleSections));
-            document.getElementById('Membership_Type').addEventListener('change', updateMembershipAmount);
-            document.getElementById('Program_Category').addEventListener('change', loadPrograms);
-            document.getElementById('Program_ID').addEventListener('change', updateProgramAmount);
-            document.getElementById('Payment_Method').addEventListener('change', togglePaymentFields);
-            toggleSections();
-            togglePaymentFields();
-        };
-    </script>
 </head>
 <body>
-    <form action="makepay.php" method="post">
-        <h1>Make Payment</h1>
-        <h2>Pay for?</h2>
-        <input type="radio" name="Pay_Type" value="Membership" checked onchange="toggleSections()"> Membership
-        <input type="radio" name="Pay_Type" value="Program" onchange="toggleSections()"> Program
 
-        <div id="membershipSection">
-            <h3>For Membership</h3>
-            Member ID: <input type="text" name="Member_ID" required><br><br>
-            Membership Type:
-            <select name="Membership_Type" id="Membership_Type" required onchange="updateMembershipAmount()">
-                <option value="Monthly">Monthly - RM50</option>
-                <option value="Quarterly">Quarterly - RM80</option>
-                <option value="Yearly">Yearly - RM120</option>
-            </select><br><br>
-            Amount: RM<input type="text" id="amount" name="amount" readonly><br><br>
-            Pay via:
-            <select name="Payment_Method" id="Payment_Method" required onchange="togglePaymentFields()">
-                <option value="Card">Card</option>
-                <option value="Online">Online</option>
-                <option value="Cash">Cash</option>
-            </select><br><br>
-            <div id="cardFields" style="display:none;">
-                Card Type: <input type="text" name="Card_Type" placeholder="Visa/Mastercard"><br>
-                Last 4 Digits: <input type="text" name="Card_Last4" maxlength="4"><br>
-                Bank: <input type="text" name="Card_Bank"><br><br>
-            </div>
-            <div id="onlineFields" style="display:none;">
-                Payment Provider: <input type="text" name="Payment_Provider"><br>
-                Transaction ID: <input type="text" name="Transaction_ID"><br><br>
-            </div>
-            <div id="cashFields" style="display:none;">
-                Cash Received: RM<input type="number" name="Cash_Received" step="0.01"><br><br>
-            </div>
-        </div>
+<h1>Make Payment</h1>
 
-        <div id="programSection" style="display:none;">
-            <h3>For Program</h3>
-            Member ID: <input type="text" name="Member_ID" required><br><br>
-            Program Category:
-            <select name="Program_Category" id="Program_Category" required onchange="loadPrograms()">
-                <option value="">Select Category</option>
-                <option value="Yoga">Yoga</option>
-                <option value="Fitness">Fitness</option>
-                <option value="Nutrition">Nutrition</option>
-                <option value="Physiotherapy">Physiotherapy</option>
-            </select><br><br>
-            Program:
-            <select name="Program_ID" id="Program_ID" required onchange="updateProgramAmount()">
-                <option value="">Select Program</option>
-            </select><br><br>
-            Amount: RM<input type="text" id="amount" name="amount" readonly><br><br>
-            Pay via:
-            <select name="Payment_Method" id="Payment_Method" required onchange="togglePaymentFields()">
-                <option value="Card">Card</option>
-                <option value="Online">Online</option>
-                <option value="Cash">Cash</option>
-            </select><br><br>
-            <div id="cardFields" style="display:none;">
-                Card Type: <input type="text" name="Card_Type" placeholder="Visa/Mastercard"><br>
-                Last 4 Digits: <input type="text" name="Card_Last4" maxlength="4"><br>
-                Bank: <input type="text" name="Card_Bank"><br><br>
-            </div>
-            <div id="onlineFields" style="display:none;">
-                Payment Provider: <input type="text" name="Payment_Provider"><br>
-                Transaction ID: <input type="text" name="Transaction_ID"><br><br>
-            </div>
-            <div id="cashFields" style="display:none;">
-                Cash Received: RM<input type="number" name="Cash_Received" step="0.01"><br><br>
-            </div>
-        </div>
+<form method="post" action="makepay.php">
 
-        <input type="submit" value="Make Payment">
-    </form>
+    <h2>Payment for?</h2>
+    <input type="submit" name="Pay_Type" value="Membership">
+    <input type="submit" name="Pay_Type" value="Program">
 
-    <?php if ($receipt): ?>
-        <pre><?php echo $receipt; ?></pre>
-        <a href="main.html">Back to Home</a>
+    <!--Membership-->
+    <?php if ($payType === 'Membership'): ?>
+
+        <hr>
+        <h2>Membership Payment</h2>
+
+        Member ID:
+        <input type="text" name="Member_ID" required><br><br>
+        
+        Membership Type:<br>
+        <input type="radio" name="Membership_Type" value="Monthly" required> Monthly
+        <input type="radio" name="Membership_Type" value="Quarterly"> Quarterly
+        <input type="radio" name="Membership_Type" value="Annually"> Annually
+        <br><br>
+
+        Pay via:
+        <select name="Payment_Method" required>
+            <option value="" disabled selected>Please Choose</option>
+            <option value="Cash">Cash</option>
+            <option value="Card">Card</option>
+            <option value="Online">E-wallet</option>
+        </select><br><br>
+
+        <input type="submit" name="Confirm_Membership" value="Confirm Membership Payment">
+
     <?php endif; ?>
+
+    <!--Program-->
+    <?php if ($payType === 'Program'): ?>
+
+        <hr>
+        <h2>Program Payment</h2>
+
+        Member ID:
+        <input type="text" name="Member_ID" required><br><br>
+
+        Program Category:
+        <select name="Program_Category" required>
+            <option value="" disabled selected>Please Choose</option>
+            <option value="Yoga">Yoga</option>
+            <option value="Fitness">Fitness</option>
+            <option value="Nutrition">Nutrition</option>
+            <option value="Physiotherapy">Physiotherapy</option>
+        </select><br><br>
+
+        Program ID:
+        <php if (isset($_POST['Program_Category'])): ?>
+            <select name="Program_ID" required>
+                <option value="" disabled selected>Please Choose</option>
+                <?php
+                $category = $_POST['Program_Category'];
+                $sql = "SELECT Program_ID, Program_Name FROM Program WHERE Program_Category = '$category'";
+                $result = mysqli_query($conn, $sql);
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<option value='" . $row['Program_ID'] . "'>" . $row['Program_Name'] . "</option>";
+                }
+                ?>
+            </select><br><br>
+
+        Pay via:
+        <select name="Payment_Method" required>
+            <option value="" disabled selected>Please Choose</option>
+            <option value="Cash">Cash</option>
+            <option value="Card">Card</option>
+            <option value="Online">E-wallet</option>
+        </select><br><br>
+
+        <php if (isset($_POST['Payment_Method'])): ?>
+            $payment_method = $_POST['Payment_Method'];
+
+            if ($payment_method == 'Card') {
+                echo 'Card Number: <input type="text" name="Card_Number" required><br><br>';
+                echo 'Card_Type:
+                <input type="radio" name="Card_Type" value="Visa" required> Visa
+                <input type="radio" name="Card_Type" value="MasterCard"> MasterCard
+                echo 'Expiry Date: <input type="month" name="Last4Digit" required><br><br>';
+                echo 'Card Bank:
+                <option value="" disabled selected>Please Choose</option>
+                <option value="CIMB">CIMB</option>
+                <option value="Maybank">Maybank</option>    
+                <option value="Public Bank">Public Bank</option>
+                <option value="RHB">RHB</option>
+                <select><br><br>';
+
+            } elseif ($payment_method == 'Ewallet') {
+                echo 'Payment Provider: 
+                <option value="" disabled selected>Please Choose</option>
+                <option value="Touch n Go">Touch n Go</option>
+                <option value="Grab Pay">Grab Pay</option>
+                <option value="Boost">Boost</option>
+                <option value="Shopee Pay">Shopee Pay</option>
+                <select><br><br>';
+            }
+
+        <input type="submit" name="Confirm_Program" value="Confirm Program Payment">
+
+    <?php endif; ?>
+
+</form>
+
 </body>
 </html>
