@@ -1,6 +1,6 @@
 <?php   
 include 'postcode.html';
-include 'connect.php';
+include '../connect.php';
 ?>
 
 <html>
@@ -29,7 +29,7 @@ include 'connect.php';
 </html>
 
 <?php
-include 'connect.php';
+include '../connect.php';
 
 if(isset($_GET['Postcode'])) {
     $postcode = $_GET['Postcode'];

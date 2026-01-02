@@ -1,6 +1,6 @@
 <?php
 include 'postcode.html';
-include 'connect.php';
+include '../connect.php';
 
 $postcode = "";
 $city = "";
