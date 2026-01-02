@@ -17,7 +17,7 @@ include 'enrolment.html';
         <select name="member_id" id="member_id" required>
             <option value="">Please Choose</option>
             <?php 
-            include 'connect.php';
+            include '../connect.php';
             $sql = "SELECT Member_ID FROM member";
             $result = mysqli_query($conn, $sql);
             if ($result) {
@@ -47,7 +47,7 @@ include 'enrolment.html';
 </html>
 
 <?php
-include 'connect.php';
+include '../connect.php';
 
 if(isset($_GET['member_id'])) {
     $member_id = $_GET['member_id'];

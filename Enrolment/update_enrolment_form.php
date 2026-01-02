@@ -1,6 +1,6 @@
 <?php
 include 'enrolment.html';
-include 'connect.php';
+include '../connect.php';
 
 $member_id = "";
 $program_id = "";
