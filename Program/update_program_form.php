@@ -1,6 +1,6 @@
 <?php
 include 'program.html';
-include 'connect.php';
+include '../connect.php';
 
 $program_id = "";
 $program_name = "";
