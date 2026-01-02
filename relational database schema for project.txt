@@ -24,6 +24,7 @@ CREATE TABLE Membership (
     Member_ID INT,
     Membership_Type VARCHAR(20),
     Membership_Status VARCHAR(15),
+    Membership_Fee decimal(7,2),
     Start_Date DATE,
     Expiry_Date DATE,
     FOREIGN KEY (Member_ID) REFERENCES Member(Member_ID)
@@ -73,7 +74,7 @@ CREATE TABLE Program_Trainer (
 );
 
 CREATE TABLE Class (
-    Class_Code INT,
+    Class_Code VARCHAR(5),
     Program_ID VARCHAR(7),
     Class_Date DATE,
     Class_Start TIME,
