@@ -1,12 +1,13 @@
 <?php   
 include 'trainer.html';
+include '../connect.php'
 ?>
 <html>
 <head>
     <title>Add Trainer</title>
 </head>
 <body>
-    <form action ="add_trainer.php" method="get">
+    <form action ="add_trainer.php" method="post">
         <h1>Add New Trainer</h1>
 
         Trainer ID: <input type="text" name = "Trainer_ID" required><br><br>
