@@ -1,7 +1,7 @@
 <?php   
 include 'trainer.html';
 ?>
-<htmL>
+<html>
 <head>
     <title>View Trainers</title>     
 </head>
@@ -23,21 +23,7 @@ include 'trainer.html';
 <?php
 include '../connect.php';
 
-$sql = "
-SELECT 
-    t.Trainer_ID,
-    t.Trainer_FName,
-    t.Trainer_LName,
-    t.Trainer_Contact,
-    t.Trainer_Email,
-    t.Trainer_Gender,
-    t.Door,
-    t.Street,
-    p.City,
-    p.State
-FROM Trainer t
-JOIN Postcode p ON t.Postcode = p.Postcode
-";
+$sql = "SELECT * FROM Trainer t JOIN Postcode p ON t.Postcode = p.Postcode";
 
 $result = mysqli_query($conn, $sql);
 
@@ -52,8 +38,8 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td>{$row['Trainer_Email']}</td>";
         echo "<td>{$row['Trainer_Gender']}</td>";
         echo "<td>{$row['Door']}, {$row['Street']}, {$row['Postcode']}, {$row['City']}, {$row['State']}</td>";
-        echo "<td>{$row['Specialization']}</td>";
-        echo "<td>{$row['Certification']}</td>";
+        echo "<td>{$row['Trainer_Specialization']}</td>";
+        echo "<td>{$row['Trainer_Certification']}</td>";
         echo "<td><a href='update_trainer_form.php?id=".$id."'>Update</a></td>";
         echo "</tr>";
     }

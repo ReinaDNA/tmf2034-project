@@ -1,4 +1,4 @@
-<htmL>
+<html>
 <head>
     <title>Members Detail</title>     
 </head>
@@ -14,7 +14,8 @@
             <th>Membership Status</th>
         </tr>
 <?php
-include 'connect.php';
+include 'data_manipulation.html';
+include '../connect.php';
 
 $sql = "SELECT 
     m.Member_ID,

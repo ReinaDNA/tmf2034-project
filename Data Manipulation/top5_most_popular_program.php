@@ -12,8 +12,10 @@
             <th>Assigned Trainer</th>
             <th>Program Category</th>
         </tr>
+
 <?php
-include 'connect.php';
+include 'data_manipulation.html';
+include '../connect.php';
 
 $sql = "SELECT 
         p.Program_ID,

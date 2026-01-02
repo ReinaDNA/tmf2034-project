@@ -1,12 +1,13 @@
 <?php   
 include 'trainer.html';
+include '../connect.php'
 ?>
 <html>
 <head>
     <title>Add Trainer</title>
 </head>
 <body>
-    <form action ="add_trainer.php" method="get">
+    <form action ="add_trainer.php" method="post">
         <h1>Add New Trainer</h1>
 
         Trainer ID: <input type="text" name = "Trainer_ID" required><br><br>
@@ -14,8 +15,6 @@ include 'trainer.html';
         First Name: <input type="text" name = "Trainer_FName" required><br><br>
 
         Last Name: <input type="text" name = "Trainer_LName" required><br><br>
-
-        Date of Birth: <input type="date" name = "Trainer_DOB" required><br><br>
 
         Phone Number: <input type="tel" name = "Trainer_Contact" required><br><br>
 
@@ -28,9 +27,16 @@ include 'trainer.html';
         Address:<br>
         Sublot: <input type="text" name = "Door" required><br>
         Street Name: <input type="text" name = "Street" required><br>
-        Postal Code: <input type="text" name = "Postcode" required><br>
-        City: <input type="text" name = "City" required><br>
-        State: <input type="text" name = "State" required><br><br>
+        Postal Code: 
+        <select name="Postcode" id="Postcode" required>
+        <option value="">Please Choose</option>
+        <?php $sql = "SELECT Postcode FROM Postcode";
+        $result = mysqli_query($conn, $sql);
+            if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<option value='{$row['Postcode']}'>{$row['Postcode']}</option>";
+                }}?>
+        </select><br><br>        
 
         Specialization: <input type="text" name = "Specialization" required><br><br>
         Certification: <input type="text" name = "Certification" required><br><br>
@@ -51,30 +57,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lname     = $_POST['Trainer_LName'];
     $contact   = $_POST['Trainer_Contact'];
     $email     = $_POST['Trainer_Email'];
-    $dob       = $_POST['Trainer_DOB'];
     $gender    = $_POST['Trainer_Gender'];
     $door      = $_POST['Door'];
     $street    = $_POST['Street'];
     $specialization = $_POST['Specialization'];
     $certification = $_POST['Certification'];
-    $city      = $_POST['City'];
-    $state     = $_POST['State'];
-
     $sql1 = "INSERT INTO Trainer
             (Trainer_ID, Postcode, Trainer_FName, Trainer_LName,
-             Trainer_Contact, Trainer_Email, Trainer_DOB,
-             Trainer_Gender, Door, Street, Specialization, Certification)
+             Trainer_Contact, Trainer_Email,
+             Trainer_Gender, Specialization, Certification, Door, Street)
             VALUES
             ('$trainer_id', '$postcode', '$fname', '$lname',
-             '$contact', '$email', '$dob', '$gender',
-             '$door', '$street', '$specialization', '$certification')";
+             '$contact', '$email', '$gender',
+             '$specialization', '$certification', '$door', '$street')";
     
-    $sql2 = "INSERT INTO postcode
-            (Postcode, city, state)
-            VALUES
-            ('$postcode', '$city', '$state')";
-
-    if ($conn->query($sql1) === TRUE && $conn->query($sql2) === TRUE) {
+    if ($conn->query($sql1) === TRUE) {
         echo "New trainer added successfully";
     } else {
         echo "Error: " . $conn->error;
