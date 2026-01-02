@@ -1,5 +1,6 @@
 <?php   
 include 'member.html';
+include '../connect.php';
 ?>
 <html>
 <head>
@@ -28,7 +29,16 @@ include 'member.html';
         Address:<br>
         Sublot: <input type="text" name = "Door" required><br>
         Street Name: <input type="text" name = "Street" required><br>
-        Postal Code: <input type="text" name = "Postcode" required><br><br>
+        Postal Code: 
+        <select name="Postcode" id="Postcode" required>
+        <option value="">Please Choose</option>
+        <?php $sql = "SELECT Postcode FROM Postcode";
+        $result = mysqli_query($conn, $sql);
+            if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<option value='{$row['Postcode']}'>{$row['Postcode']}</option>";
+                }}?>
+        </select><br><br>
         
         <input type="submit" value="Add Member">    
     </form>
@@ -36,7 +46,6 @@ include 'member.html';
 </html>
 
 <?php
-include 'connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
