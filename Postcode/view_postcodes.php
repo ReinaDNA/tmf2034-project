@@ -12,6 +12,7 @@ include 'postcode.html';
             <th>Postcode</th>
             <th>City</th>
             <th>State</th>
+            <th>Action</th>
         </tr>
       
 <?php

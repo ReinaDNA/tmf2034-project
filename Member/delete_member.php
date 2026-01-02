@@ -33,9 +33,9 @@ include '../connect.php';
 if (isset($_GET['Member_id']) && $_GET['Member_id'] !== "") {
     $member_id = (int)$_GET['Member_id'];
 
-    $sql = "DELETE FROM enrolment WHERE Member_ID = $member_id";
-    $sql2 = "DELETE FROM member WHERE Member_ID = $member_id";
-    $result = mysqli_query($conn, $sql2);
+    $sql = "DELETE FROM member WHERE Member_ID = $member_id";
+
+    $result = mysqli_query($conn, $sql);
 
     if ($result) {
         if (mysqli_affected_rows($conn) > 0) {

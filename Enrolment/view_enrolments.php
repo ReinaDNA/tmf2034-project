@@ -11,7 +11,8 @@ include 'enrolment.html';
         <tr>
             <th>Member ID</th>
             <th>Program ID</th>
-            <th>Enrolment Date</th>  
+            <th>Enrolment Date</th> 
+            <th>Action</th> 
         </tr>
       
 <?php

@@ -19,7 +19,7 @@ include 'membership.html';
         <option value ="">Please Choose</option>
         <option value="Monthly">Monthly</option>
         <option value="Quarterly">Quarterly</option>
-        <option value="Annually">Annually</option><br><br> 
+        <option value="Annual">Annual</option><br><br> 
         </select><br><br> 
         
         Start_Date: <input type="date" name = "Start_Date" required><br><br>
