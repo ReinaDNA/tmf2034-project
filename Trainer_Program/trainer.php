@@ -1,5 +1,5 @@
 <?php
-include "connect.php";
+include "../connect.php";
 
 $result = $conn->query("SELECT * FROM Trainer");
 ?>

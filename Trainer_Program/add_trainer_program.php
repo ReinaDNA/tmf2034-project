@@ -1,6 +1,6 @@
 <?php   
 include 'program_trainer.html';
-include 'connect.php';
+include '../connect.php';
 ?>
 <html>
 <head>
@@ -42,7 +42,7 @@ include 'connect.php';
 </html>
 
 <?php
-include 'connect.php';
+include '../connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 

@@ -1,6 +1,6 @@
 <?php
 include 'program_trainer.html';
-include 'connect.php';
+include '../connect.php';
 
 $program_id = "";
 $trainer_id = "";

@@ -16,7 +16,7 @@ include 'program_trainer.html';
         </tr>
       
 <?php
-include 'connect.php';
+include '../connect.php';
 
 $sql = "SELECT * FROM program_trainer";
 

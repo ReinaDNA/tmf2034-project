@@ -1,6 +1,6 @@
 <?php   
 include 'program_trainer.html';
-include 'connect.php';
+include '../connect.php';
 ?>
 
 <html>
@@ -44,7 +44,7 @@ include 'connect.php';
 </html>
 
 <?php
-include 'connect.php';
+include '../connect.php';
 
 if(isset($_GET['Program_ID'])) {
     $program_id = $_GET['Program_ID'];
