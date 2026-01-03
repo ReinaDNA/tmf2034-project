@@ -17,7 +17,8 @@ include 'trainer.html';
             <th>Gender</th>
             <th>Address</th>
             <th>Specialization</th>
-            <th>Certification Level</th>    
+            <th>Certification Level</th> 
+            <th>Action</th>    
         </tr>
       
 <?php
