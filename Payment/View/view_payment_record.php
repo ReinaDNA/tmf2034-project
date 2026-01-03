@@ -13,7 +13,7 @@
      </p>
         <a href="../../main.html">Home</a>
         <a href="../add_payment.php">Make Payment</a>
-        <a href="view_payment_record.php">Payment History</a>
+        <a href="../View/view_payment_record.php">Payment History</a>
         <a href="../delete_payment.php">Delete Payment</a>
     <hr>
 </body>
