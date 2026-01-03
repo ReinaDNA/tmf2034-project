@@ -13,28 +13,41 @@ include '../connect.php';
 
 <body>
     <form action="delete_class.php" method="get">
-        Class Code to Delete:<input type="text" name="class_code" required><br><br>
+        Class Code to Delete:
+        <select name="Class_Code" required>
+        <option value="">Please Choose</option>
+        <?php
+        $sql = "SELECT Class_Code FROM Class";
+        $result = mysqli_query($conn, $sql);
+
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<option value='{$row['Class_Code']}'>{$row['Class_Code']}</option>";
+            }
+        }
+        ?>
+        </select><br><br>
+
         <input type="submit" value="Delete Class">
     </form>
 </body>
 </html>
 
 <?php
-
-if (isset($_GET['class_code'])) {
-    $class_code = $_GET['class_code'];
+if (isset($_GET['Class_Code']) && $_GET['Class_Code'] !== "") {
+    $class_code = $_GET['Class_Code'];
 
     $sql = "DELETE FROM Class WHERE Class_Code = '$class_code'";
     $result = mysqli_query($conn, $sql);
 
     if ($result) {
-        if ($conn->query($sql) ==TRUE ) {
-            echo "Class $class_code is deleted successfully";
+        if (mysqli_affected_rows($conn) > 0) {
+            echo "<p>Class $class_code deleted successfully.</p>";
         } else {
-            echo "No class is found with the code: $class_code";
+            echo "<p>No class found with code $class_code.</p>";
         }
     } else {
-        echo "No class code provided.";
+        echo "<p>Error deleting class: " . mysqli_error($conn) . "</p>";
     }
 }
 

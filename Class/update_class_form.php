@@ -1,6 +1,6 @@
 <?php
 include 'classes.html';
-include '../connect.php';
+include '../connect.php'; 
 
 $class_code = "";
 $program_id = "";
@@ -10,11 +10,8 @@ $class_end = "";
 $class_venue = "";
 $class_status = "";
 
-// If user clicks Update link from view_classes.php
 if (isset($_GET['class_code'])) {
-
     $class_code = $_GET['class_code'];
-
     $sql = "SELECT * FROM Class WHERE Class_Code = '$class_code'";
     $result = mysqli_query($conn, $sql);
 
@@ -35,7 +32,6 @@ if (isset($_GET['class_code'])) {
 
 /* If user clicks Update button */
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     $class_code   = $_POST['Class_Code'];
     $program_id   = $_POST['Program_ID'];
     $class_date   = $_POST['Class_Date'];
@@ -68,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
         <p>Update Class Information For :<?php echo $class_code; ?></p>
-        <form action="update_class.php" method="post">
+        <form action="update_class_form.php" method="post">
 
             <input type="hidden" name="Class_Code" value="<?php echo $class_code; ?>">
 
