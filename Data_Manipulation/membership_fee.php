@@ -16,7 +16,6 @@ include '../connect.php';
             <th>Total Fee Paid</th>
         </tr>
 <?php
-include 'data_manipulation.html';
 include '../connect.php';
 
 $sql = "SELECT 
