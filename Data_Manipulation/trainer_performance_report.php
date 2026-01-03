@@ -32,8 +32,7 @@ GROUP BY
     t.Trainer_ID,
     t.Trainer_FName,
     t.Trainer_LName
-ORDER BY t.Trainer_ID ASC
-LIMIT 5";
+ORDER BY t.Trainer_ID ASC";
 
 $result = mysqli_query($conn, $sql);
 
