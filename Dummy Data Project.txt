@@ -20,19 +20,22 @@ INSERT INTO Member VALUES
 (000007,'97000','Adam','Bong','0182345321','adam@gmail.com','1995-09-07','Male','No 7','Jalan Bintulu'),
 (000008,'98000','Hafiz','Rahman','0166677889','hafiz@gmail.com','1994-12-15','Male','No 45','Jalan Miri'),
 (000009,'98100','Karen','Chin','0119987363','karen@gmail.com','2002-04-18','Female','No 23','Jalan Lutong'),
-(000010,'98700','Irfan','Azman','0195566778','irfan@gmail.com','1993-08-25','Male','No 88','Jalan Limbang');
+(000010,'98700','Irfan','Azman','0195566778','irfan@gmail.com','1993-08-25','Male','No 88','Jalan Limbang'),
+(000011,'93000','Rayan','Beat','0191111111', 'rayanbeat@gmail.com','2000-01-01','Male', 'No 91','Jalan Test'),
+(000012,'93000','Nayar','Teab','0193333333','nayarteab@gmail.com','2000-02-02','Female','No 92','Jalan Test');
 
 INSERT INTO Membership VALUES
-('M19332',000001,'Monthly','Active','2025-01-01','2025-01-31'),
-('A67483',000002,'Annual','Active','2025-01-01','2025-12-31'),
-('Q34879',000003,'Quarterly','Inactive','2024-10-01','2024-12-31'),
-('A38401',000004,'Annual','Active','2025-01-01','2025-12-31'),
-('M21389',000005,'Monthly','Active','2025-05-01','2025-05-31'),
-('Q93248',000006,'Quarterly','Active','2025-01-01','2025-03-31'),
-('M73898',000007,'Monthly','Inactive','2024-11-01','2024-11-30'),
-('A22321',000008,'Annual','Active','2025-01-01','2025-12-31'),
-('Q43546',000009,'Quarterly','Suspended','2025-03-01','2025-05-31'),
-('A83466',000010,'Annual','Active','2025-01-01','2025-12-31');
+('M19332',000001,'Monthly','Active',100.00,'2025-01-01','2025-01-31'),
+('A67483',000002,'Annually','Active',1200.00,'2025-01-01','2025-12-31'),
+('Q34879',000003,'Quarterly','Inactive',300.00,'2024-10-01','2024-12-31'),
+('A38401',000004,'Annually','Active',1200.00,'2025-01-01','2025-12-31'),
+('M21389',000005,'Monthly','Active',100.00,'2025-05-01','2025-05-31'),
+('Q93248',000006,'Quarterly','Active',300.00,'2025-01-01','2025-03-31'),
+('M73898',000007,'Monthly','Inactive',100.00,'2024-11-01','2024-11-30'),
+('A22321',000008,'Annually','Active',1200.00,'2025-01-01','2025-12-31'),
+('Q43546',000009,'Quarterly','Suspended',300.00,'2025-03-01','2025-05-31'),
+('A83466',000010,'Annually','Active',1200.00,'2025-01-01','2025-12-31'),
+('M01289',000011,'Monthly','Active',100.00, '2025-06-01','2025-06-30');
 
 INSERT INTO Program VALUES
 ('YOG101','Yoga Basics','Yoga','4 weeks',120.00),
@@ -44,14 +47,16 @@ INSERT INTO Program VALUES
 ('NUT302','Nutrition Essentials','Nutrition','4 weeks',110.00),
 ('FIT204','CrossFit','Fitness','8 weeks',200.00),
 ('PHY401','Injury Rehab Program','Physiotherapy','6 weeks',450.00),
-('PHY402','Basic Physiotherapy','Physiotherapy','4 weeks',200.00);
+('PHY402','Basic Physiotherapy','Physiotherapy','4 weeks',200.00),
+('FIT205','Power Hour','Fitness','4 weeks',100.00);
 
 INSERT INTO Trainer VALUES
 ('T0001','93000','Marverick','Song','0121118895','marverick@gmail.com','Male','Yoga','Level 3 Yoga Alliance','No 10','Jalan Green'),
 ('T0002','93100','Sarah','Noel','0122222134','sarah@gmail.com','Female','Nutrition','ISSN Certified','No 22','Jalan Song'),
 ('T0003','93200','David','Ho','0123333165','david@gmail.com','Male','Fitness','Level 3','No 15','Jalan Tabuan Jaya'),
 ('T0004','93300','Aisyah','Noor','0124448890','aisyah@gmail.com','Female','Physiotherapy','CPT + Rehab Specialist','No 8','Jalan Satok'),
-('T0005','93400','Amir','Hakim','0125555678','amir@gmail.com','Male','Fitness','NASM Level 2','No 30','Jalan Pending');
+('T0005','93400','Amir','Hakim','0125555678','amir@gmail.com','Male','Fitness','NASM Level 2','No 30','Jalan Pending'),
+('T0006','93000','Nayar','Teab','0192222222', 'nayarteab@gmail.com','Male','Fitness', 'Test Cert','No 99','Jalan Test');
 
 INSERT INTO Program_Trainer VALUES
 ('YOG101','T0001','2024-01-01','2024-12-31'),
@@ -75,7 +80,13 @@ INSERT INTO Enrolment VALUES
 (000007,'NUT302','2024-11-10'),
 (000008,'FIT204','2025-01-20'),
 (000009,'PHY401','2025-03-05'),
-(000010,'PHY402','2025-01-25');
+(000010,'PHY402','2025-01-25'),
+(000001,'FIT201', '2025-01-12'),
+(000001,'FIT202', '2025-01-15'),
+(000001,'YOG102', '2025-01-18'),
+(000002,'YOG101', '2025-01-11'),
+(000002,'FIT202', '2025-01-15'),
+(000003,'FIT203', '2024-12-20');
 
 INSERT INTO Class VALUES
 ('C0001','YOG101','2025-01-10','09:00','10:00','Room A','Completed'),
@@ -87,7 +98,12 @@ INSERT INTO Class VALUES
 ('C0007','NUT302','2024-11-15','09:00','10:00','Room A','Cancelled'),
 ('C0008','FIT204','2025-01-28','17:00','18:00','Room D','Completed'),
 ('C0009','PHY401','2025-03-10','19:00','20:00','Rehab Studio','Active'),
-('C0010','PHY402','2025-01-30','08:00','09:00','Rehab Studio','Completed');
+('C0010','PHY402','2025-01-30','08:00','09:00','Rehab Studio','Completed'),
+('C0011','YOG101','2025-02-05','09:00','10:00','Room A','Completed'),
+('C0012','YOG101','2025-03-05','09:00','10:00','Room A','Active'),
+('C0013','FIT201','2025-02-12','10:00','11:00','Room B','Completed'),
+('C0014','FIT201','2025-03-12','10:00','11:00','Room B','Active'),
+('C0015','FIT202','2025-02-15','11:00','12:00','Room D','Completed');
 
 INSERT INTO Payment VALUES
 ('INV00001',000001,'M19332',NULL,'2025-01-01',100.00,'Membership'),
@@ -109,7 +125,13 @@ INSERT INTO Payment VALUES
 ('INV00016',000006,NULL,'NUT301','2025-01-15',100.00,'Program'),
 ('INV00017',000007,NULL,'NUT302','2024-11-10',110.00,'Program'),
 ('INV00019',000009,NULL,'FIT204','2025-03-20',200.00,'Program'),
-('INV00020',000008,NULL,'FIT204','2025-01-20',200.00,'Program');
+('INV00020',000008,NULL,'FIT204','2025-01-20',200.00,'Program'),
+('INV00021',000001,NULL,'FIT201','2025-01-12',150.00,'Program'),
+('INV00022',000001,NULL,'FIT202','2025-01-15',180.00,'Program'),
+('INV00023',000001,NULL,'YOG102','2025-01-18',140.00,'Program'),
+('INV00024',000002,NULL,'YOG101','2025-01-10',120.00,'Program'),
+('INV00025',000002,NULL,'FIT202','2025-01-15',180.00,'Program'),
+('INV00026',000003,NULL,'FIT203','2024-12-20',220.00,'Program');
 
 INSERT INTO Cash VALUES
 ('INV00001',100.00,0.00),
@@ -117,7 +139,9 @@ INSERT INTO Cash VALUES
 ('INV00007',110.00,0.00),
 ('INV00011',200.00,80.00),
 ('INV00015',250.00,30.00),
-('INV00016',100.00,0.00);
+('INV00016',100.00,0.00),
+('INV00021',150.00,0.00),
+('INV00022',200.00,20.00);
 
 INSERT INTO Card VALUES
 ('INV00002','Visa','1234','Maybank'),
@@ -126,7 +150,9 @@ INSERT INTO Card VALUES
 ('INV00008','Visa','8888','RHB'),
 ('INV00012','Master','4321','Hong Leong'),
 ('INV00018','Visa','5566','Maybank'),
-('INV00020','Master','7788','CIMB');
+('INV00020','Master','7788','CIMB'),
+('INV00023','Visa','3456','Maybank'),
+('INV00024','Master','6767','CIMB');
 
 INSERT INTO Online VALUES
 ('INV00003','GrabPay','GRB3478019'),
@@ -135,4 +161,6 @@ INSERT INTO Online VALUES
 ('INV00013','Boost','BST4016632'),
 ('INV00014','GrabPay','GRB9988123'),
 ('INV00017','TouchNGo','TNG5599201'),
-('INV00019','TouchNGo','TNG8899001');
+('INV00019','TouchNGo','TNG8899001'),
+('INV00025','TouchNGo','TNG882910'),
+('INV00026','GrabPay','GRB109283');
