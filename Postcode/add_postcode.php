@@ -15,7 +15,7 @@ include 'postcode.html';
 
         State: <input type="text" name = "State" required><br><br>
 
-        <input type="submit" value="Add Member">    
+        <input type="submit" value="Add Postcode">    
     </form>
 </body>
 </html>
