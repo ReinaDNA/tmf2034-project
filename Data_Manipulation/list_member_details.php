@@ -1,3 +1,7 @@
+<?php
+include 'data_manipulation.html';
+include '../connect.php';
+?>
 <html>
 <head>
     <title>Members Detail</title>     
@@ -14,7 +18,6 @@
             <th>Membership Status</th>
         </tr>
 <?php
-include 'data_manipulation.html';
 include '../connect.php';
 
 $sql = "SELECT 

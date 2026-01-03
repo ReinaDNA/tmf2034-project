@@ -1,4 +1,8 @@
-<htmL>
+<?php
+include 'data_manipulation.html';
+include '../connect.php';
+?>
+<html>
 <head>
     <title>Membership Fee Report</title>     
 </head>

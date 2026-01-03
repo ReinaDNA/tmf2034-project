@@ -1,4 +1,8 @@
-<htmL>
+<?php
+include 'data_manipulation.html';
+include '../connect.php';
+?>
+<html>
 <head>
     <title>Class Schedule</title>     
 </head>
@@ -13,10 +17,9 @@
             <th>Class Venue</th>
             <th>Assigned Trainer</th>
             <th>Program Category</th>
-        </tr>
+        </tr>   
 
 <?php
-include 'data_manipulation.html';
 include '../connect.php';
 
 $sql = "SELECT 

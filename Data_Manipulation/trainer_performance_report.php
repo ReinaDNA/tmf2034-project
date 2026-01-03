@@ -1,3 +1,7 @@
+<?php
+include 'data_manipulation.html';
+include '../connect.php';
+?>
 <html>
 <head>
     <title>Trainer Performance Report</title>     
@@ -12,7 +16,6 @@
             <th>Total Cancelled Classes</th>
         </tr>
 <?php
-include 'data_manipulation.html';
 include '../connect.php';
 
 $sql = "SELECT 

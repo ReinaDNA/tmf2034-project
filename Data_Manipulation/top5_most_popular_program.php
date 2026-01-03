@@ -1,4 +1,8 @@
-<htmL>
+<?php
+include 'data_manipulation.html';
+include '../connect.php';
+?>
+<html>
 <head>
     <title>Top 5 Most Popular Program</title>     
 </head>
@@ -14,7 +18,6 @@
         </tr>
 
 <?php
-include 'data_manipulation.html';
 include '../connect.php';
 
 $sql = "SELECT 
@@ -60,7 +63,7 @@ if (mysqli_num_rows($result) > 0) {
         echo "<td>{$row['Program_ID']}</td>";
         echo "<td>{$row['Program_Name']}</td>";
         echo "<td>{$row['Total_Enrolments']}</td>";
-        echo "<td>{$row['Trainer_FName']} {$row['Trainer_LName']}</td>";
+        echo "<td>{$row['Trainer_Name']}</td>";
         echo "<td>{$row['Program_Category']}</td>";
         echo "</tr>";
     }
