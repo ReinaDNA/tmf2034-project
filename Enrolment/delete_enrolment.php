@@ -12,7 +12,7 @@ include 'enrolment.html';
 
 <body>
     <form action="delete_enrolment.php" method="get">
-        Enrolment to Delete:
+        Enrolment to Delete: <br><br>
         Member ID: 
         <select name="member_id" id="member_id" required>
             <option value="">Please Choose</option>

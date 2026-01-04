@@ -13,6 +13,7 @@ include 'program_trainer.html';
             <th>Trainer_ID</th>
             <th>Start Date</th>
             <th>End Date</th>
+            <th>Action</th>
         </tr>
       
 <?php
