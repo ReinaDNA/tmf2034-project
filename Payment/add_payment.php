@@ -107,7 +107,7 @@ $Cash_Received  = $_POST['Cash_Received']  ?? '';
         $result = mysqli_query($conn, $sql); 
         $row = mysqli_fetch_assoc($result);
         $res= $row['Membership_Type'];
-        if ($res == 'Annual') {
+        if ($res == 'Annually') {
             $Amount = 1200;
         }elseif ($res == 'Quarterly') {
             $Amount = 300;
