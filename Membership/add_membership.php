@@ -30,7 +30,7 @@ include '../connect.php';
         <option value ="">Please Choose</option>
         <option value="Monthly">Monthly</option>
         <option value="Quarterly">Quarterly</option>
-        <option value="Annual">Annual</option><br><br> 
+        <option value="Annually">Annual</option><br><br> 
         </select><br><br> 
         
         Start_Date: <input type="date" name = "Start_Date" required><br><br>

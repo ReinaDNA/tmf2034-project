@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             WHERE Member_ID = '$member_id' AND Program_ID = '$program_id'";
 
     if (mysqli_query($conn, $sql)) {
-        echo "Member updated successfully.<br>";
+        echo "Enrolment updated successfully.<br>";
     } else {
         echo "Error updating member: " . mysqli_error($conn);
     }
